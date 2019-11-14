@@ -5,7 +5,6 @@ import requests
 from app import BASE_URL
 from app.db_commands import add_to_db, delete_from_db
 
-
 def send_message(chat_id, text):
     url = BASE_URL + 'sendMessage'
     payload = {
