@@ -5,6 +5,7 @@ import requests
 from app import BASE_URL
 from app.db_commands import add_to_db, delete_from_db
 
+
 def send_message(chat_id, text):
     url = BASE_URL + 'sendMessage'
     payload = {
@@ -20,6 +21,15 @@ def send_message(chat_id, text):
 def handle_command(message):
     chat_id = message['chat']['id']
     text = message['text']
+
+    if text == '/help':
+        reply = 'Этот бот создан для отправки уведомлений о новых сериях мультсериала "Рик и Морти"\n\n' + \
+                'Доступные комманды:\n' + \
+                '/subscribe - Подписаться на рассылку уведомлений о новых эпизодах "Рик и Морти"\n' + \
+                '/unsubscribe - Отменить подписку на рассылку уведомлений\n' + \
+                '/when - Узнать, через сколько дней выходит новая серия "Рик и Морти"'
+
+        send_message(chat_id, reply)
 
     if text == '/subscribe':
         send_message(chat_id, 'Вы будете получать уведомления перед выходом новых серий "Рик и Морти"')
@@ -38,3 +48,9 @@ def handle_command(message):
             result_string = 'Новая серия выходит сегодня'
 
         send_message(chat_id, result_string)
+
+
+def handle_ordinary_message(message):
+    chat_id = message['chat']['id']
+
+    send_message(chat_id, 'Вабба-лабба-даб-дабс!')
